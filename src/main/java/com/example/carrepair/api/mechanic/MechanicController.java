@@ -13,6 +13,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/mechanics")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class MechanicController {
 
     private final MechanicService mechanicService;

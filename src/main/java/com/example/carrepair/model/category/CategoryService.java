@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -15,7 +16,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
      public List<Category> findAll(){
-         return categoryRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
+         return categoryRepository.findAll();
      }
 
      public Optional<Category> findById(Long id){
@@ -29,4 +30,11 @@ public class CategoryService {
      public void saveCategory(Category category){
          categoryRepository.save(category);
      }
+
+     public List<String> findALlNames(){
+        return categoryRepository.findAll()
+                .stream()
+                .map(Category::getName)
+                .collect(Collectors.toList());
+    }
 }

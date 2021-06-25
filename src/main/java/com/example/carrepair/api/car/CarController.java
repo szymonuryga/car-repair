@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/cars")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class CarController {
 
     private final CarService carService;

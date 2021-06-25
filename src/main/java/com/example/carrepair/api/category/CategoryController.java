@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/category")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -18,6 +19,11 @@ public class CategoryController {
     @GetMapping
     public List<Category> getAll() {
         return categoryService.findAll();
+    }
+
+    @GetMapping("/names")
+    public List<String> findAllNames(){
+        return categoryService.findALlNames();
     }
 
     @GetMapping("/{id}")

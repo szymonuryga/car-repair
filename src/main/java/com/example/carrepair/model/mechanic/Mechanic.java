@@ -6,10 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,7 +19,7 @@ public class Mechanic extends Person {
     @Column(unique = true)
     private String email;
     private double salary;
-    @ManyToMany
+    @OneToMany(mappedBy = "mechanic")
     private Set<Repair> repairs = new HashSet<>();
 
     public void setEmail(String firstName, String lastName) {
