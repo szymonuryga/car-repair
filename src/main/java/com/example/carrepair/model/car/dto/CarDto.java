@@ -8,7 +8,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CarDto {
-    private UUID id;
+    private Long id;
     private String registrationNumber;
     private String Vin;
     private String model;
