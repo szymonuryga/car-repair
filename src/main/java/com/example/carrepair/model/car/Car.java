@@ -1,9 +1,11 @@
 package com.example.carrepair.model.car;
 
+import com.example.carrepair.model.repair.Repair;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,11 +17,13 @@ import java.util.UUID;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
-
+    private Long id;
+    @Column(unique = true)
     private String registrationNumber;
     private String Vin;
     private String model;
     private String brand;
+    @OneToMany(mappedBy = "car")
+    private List<Repair> repairs = new ArrayList<>();
 
 }

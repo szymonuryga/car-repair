@@ -11,9 +11,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "CLIENTS")
+@Table(name="CLIENTS")
 public class Client extends Person {
     @Column(unique = true)
-    private String nationalID;
+    private String nationalId;
 
 }

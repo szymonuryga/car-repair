@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
+
 import java.util.stream.Collectors;
 
 @Service
@@ -24,12 +24,12 @@ public class CarService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<CarDto> findById(UUID id) {
+    public Optional<CarDto> findById(Long id) {
         return carRepository.findById(id)
                 .map(carMapper::toDto);
     }
 
-    public void removeCar(UUID id) {
+    public void removeCar(Long id) {
         carRepository.deleteById(id);
     }
 

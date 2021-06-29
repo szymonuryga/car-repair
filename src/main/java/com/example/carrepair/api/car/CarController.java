@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/cars")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class CarController {
 
     private final CarService carService;
@@ -23,7 +23,7 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CarDto> findById(@PathVariable UUID id){
+    public ResponseEntity<CarDto> findById(@PathVariable Long id){
         return carService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -37,7 +37,7 @@ public class CarController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCar(@PathVariable UUID id){
+    public void deleteCar(@PathVariable Long id){
         carService.removeCar(id);
     }
 
