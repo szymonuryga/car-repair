@@ -1,7 +1,11 @@
 package com.example.carrepair.model.category;
 
+import com.example.carrepair.model.category.dto.CategoryDto;
+import com.example.carrepair.model.category.dto.CategoryMapper;
+import com.example.carrepair.model.client.Client;
+import com.example.carrepair.model.client.DuplicateNationalIdException;
+import com.example.carrepair.model.client.dto.ClientDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,24 +18,34 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    CategoryMapper categoryMapper = new CategoryMapper();
 
-     public List<Category> findAll(){
-         return categoryRepository.findAll();
-     }
+    public List<CategoryDto> findAll() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(CategoryMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
-     public Optional<Category> findById(Long id){
-         return categoryRepository.findById(id);
-     }
+    public Optional<CategoryDto> findById(Long id) {
+        return categoryRepository.findById(id).map(CategoryMapper::toDto);
+    }
 
-     public void removeCategory(Long id){
-         categoryRepository.deleteById(id);
-     }
+    public void removeCategory(Long id) {
+        categoryRepository.deleteById(id);
+    }
 
-     public void saveCategory(Category category){
-         categoryRepository.save(category);
-     }
+    public CategoryDto saveCategory(CategoryDto category) {
+        Optional<Category> categoryByName = categoryRepository.findByName(category.getName());
+        categoryByName.ifPresent(a ->{
+            throw new DuplicateNameCategoryException();
+        });
+        Category categoryEntity = categoryMapper.toEntity(category);
+        Category savedCategory = categoryRepository.save(categoryEntity);
+        return categoryMapper.toDto(savedCategory);
+    }
 
-     public List<String> findALlNames(){
+    public List<String> findALlNames() {
         return categoryRepository.findAll()
                 .stream()
                 .map(Category::getName)
