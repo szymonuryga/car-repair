@@ -1,5 +1,6 @@
 package com.example.carrepair.model.mechanic;
 
+import com.example.carrepair.model.category.Category;
 import com.example.carrepair.model.mechanic.dto.MechanicDto;
 import com.example.carrepair.model.mechanic.dto.MechanicMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,13 @@ public class MechanicService {
         return mechanicRepository.findAll()
                 .stream()
                 .map(mechanicMapper::toDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> findALlEmails() {
+        return mechanicRepository.findAll()
+                .stream()
+                .map(Mechanic::getEmail)
                 .collect(Collectors.toList());
     }
 

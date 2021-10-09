@@ -2,12 +2,20 @@ package com.example.carrepair.model.repair;
 
 import com.example.carrepair.model.car.Car;
 import com.example.carrepair.model.car.CarRepository;
+import com.example.carrepair.model.car.dto.CarDto;
+import com.example.carrepair.model.car.dto.CarMapper;
 import com.example.carrepair.model.category.Category;
 import com.example.carrepair.model.category.CategoryRepository;
+import com.example.carrepair.model.category.dto.CategoryDto;
+import com.example.carrepair.model.category.dto.CategoryMapper;
 import com.example.carrepair.model.client.Client;
 import com.example.carrepair.model.client.ClientRepository;
+import com.example.carrepair.model.client.dto.ClientDto;
+import com.example.carrepair.model.client.dto.ClientMapper;
 import com.example.carrepair.model.mechanic.Mechanic;
 import com.example.carrepair.model.mechanic.MechanicRepository;
+import com.example.carrepair.model.mechanic.dto.MechanicDto;
+import com.example.carrepair.model.mechanic.dto.MechanicMapper;
 import com.example.carrepair.model.repair.dto.RepairDto;
 import com.example.carrepair.model.repair.dto.RepairMapper;
 import com.example.carrepair.model.repair.exception.InvalidAssignmentException;
@@ -31,6 +39,9 @@ public class RepairService {
     private final CarRepository carRepository;
     private final CategoryRepository categoryRepository;
     private final MechanicRepository mechanicRepository;
+    CarMapper carMapper = new CarMapper();
+    MechanicMapper mechanicMapper = new MechanicMapper();
+    ClientMapper clientMapper = new ClientMapper();
 
     public List<RepairDto> findAll(){
         return repairRepository.findAll()
@@ -88,6 +99,38 @@ public class RepairService {
                 new InvalidAssignmentException("No mechanic with given email"+ repair.getEmail())));
         repairEntity.setStart(LocalDateTime.now());
         return RepairMapper.toDto(repairRepository.save(repairEntity));
+    }
+
+    public ClientDto findTheMostFrequentlyClient() {
+        return repairRepository.findTheMostFrequentlyClient()
+                .stream()
+                .findFirst()
+                .map(clientMapper::toDto)
+                .orElseThrow(() -> new InvalidAssignmentException("No client found"));
+    }
+
+    public CarDto findTheMostFrequentlyCar() {
+        return repairRepository.findTheMostFrequentlyCar()
+                .stream()
+                .findFirst()
+                .map(carMapper::toDto)
+                .orElseThrow(() -> new InvalidAssignmentException("No car found"));
+    }
+
+    public MechanicDto findTheMostFrequentlyMechanic() {
+        return repairRepository.findTheMostFrequentlyMechanic()
+                .stream()
+                .findFirst()
+                .map(mechanicMapper::toDto)
+                .orElseThrow(() -> new InvalidAssignmentException("No mechanic found"));
+    }
+
+    public CategoryDto findTheMostFrequentlyCategory() {
+       return repairRepository.findTheMostFrequentlyCategory()
+               .stream()
+               .findFirst()
+               .map(CategoryMapper::toDto)
+               .orElseThrow(() -> new InvalidAssignmentException("No category found"));
     }
 
 }

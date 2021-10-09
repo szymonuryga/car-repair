@@ -22,6 +22,16 @@ public class CarController {
         return carService.findAll();
     }
 
+    @GetMapping("/registrations")
+    public List<String> findALlRegistrationNumbers(){
+        return carService.findALlRegistrationNumbers();
+    }
+
+    @GetMapping("/brand")
+    public String findTheMostFrequentlyBrand(){
+        return carService.getTheMostFrequentlyBrand();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CarDto> findById(@PathVariable Long id){
         return carService.findById(id)

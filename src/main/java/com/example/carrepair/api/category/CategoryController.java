@@ -1,7 +1,7 @@
 package com.example.carrepair.api.category;
 
-import com.example.carrepair.model.category.Category;
 import com.example.carrepair.model.category.CategoryService;
+import com.example.carrepair.model.category.dto.CategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public List<Category> getAll() {
+    public List<CategoryDto> getAll() {
         return categoryService.findAll();
     }
 
@@ -27,14 +27,14 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> findById(@PathVariable Long id) {
+    public ResponseEntity<CategoryDto> findById(@PathVariable Long id) {
         return categoryService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public void createCategory(@RequestBody Category category){
+    public void createCategory(@RequestBody CategoryDto category){
          categoryService.saveCategory(category);
     }
 

@@ -16,34 +16,41 @@ public class ClientService {
     private final ClientRepository clientRepository;
     ClientMapper clientMapper = new ClientMapper();
 
-    public List<ClientDto> findAll(){
+    public List<ClientDto> findAll() {
         return clientRepository.findAll()
                 .stream()
                 .map(clientMapper::toDto)
                 .collect(Collectors.toList());
     }
 
+    public List<String> findALlNationalId() {
+        return clientRepository.findAll()
+                .stream()
+                .map(Client::getNationalId)
+                .collect(Collectors.toList());
+    }
 
-    public Optional<ClientDto> findById(Long id){
+
+    public Optional<ClientDto> findById(Long id) {
         return clientRepository.findById(id).map(clientMapper::toDto);
     }
 
-    public void removeClient(Long id){
+    public void removeClient(Long id) {
         clientRepository.deleteById(id);
     }
 
-    public ClientDto save(ClientDto client){
+    public ClientDto save(ClientDto client) {
         Optional<Client> clientByNationalId = clientRepository.findClientByNationalId(client.getNationalId());
-        clientByNationalId.ifPresent(a ->{
+        clientByNationalId.ifPresent(a -> {
             throw new DuplicateNationalIdException();
         });
         return mapAndSave(client);
     }
 
-    public ClientDto update(ClientDto client){
+    public ClientDto update(ClientDto client) {
         Optional<Client> clientByNationalId = clientRepository.findClientByNationalId(client.getNationalId());
-        clientByNationalId.ifPresent(a ->{
-            if(!a.getId().equals(client.getId()))
+        clientByNationalId.ifPresent(a -> {
+            if (!a.getId().equals(client.getId()))
                 throw new DuplicateNationalIdException();
         });
         return mapAndSave(client);
