@@ -1,5 +1,9 @@
 package com.example.carrepair.api.repair;
 
+import com.example.carrepair.model.car.dto.CarDto;
+import com.example.carrepair.model.category.dto.CategoryDto;
+import com.example.carrepair.model.client.dto.ClientDto;
+import com.example.carrepair.model.mechanic.dto.MechanicDto;
 import com.example.carrepair.model.repair.RepairService;
 import com.example.carrepair.model.repair.dto.RepairDto;
 import com.example.carrepair.model.repair.exception.InvalidAssignmentException;
@@ -23,6 +27,26 @@ public class RepairController {
     @GetMapping
     public List<RepairDto> getAll(){
         return repairService.findAll();
+    }
+
+    @GetMapping("/client")
+    public ClientDto getTheMostFrequentlyClient(){
+        return repairService.findTheMostFrequentlyClient();
+    }
+
+    @GetMapping("/car")
+    public CarDto getTheMostFrequentlyCar(){
+        return repairService.findTheMostFrequentlyCar();
+    }
+
+    @GetMapping("/category")
+    public CategoryDto getTheMostFrequentlyCategory(){
+        return repairService.findTheMostFrequentlyCategory();
+    }
+
+    @GetMapping("/mechanic")
+    public MechanicDto getTheMostFrequentlyMechanic(){
+        return repairService.findTheMostFrequentlyMechanic();
     }
 
     @GetMapping("/{id}")

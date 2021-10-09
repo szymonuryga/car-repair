@@ -2,6 +2,7 @@ package com.example.carrepair.model.car;
 
 import com.example.carrepair.model.car.dto.CarDto;
 import com.example.carrepair.model.car.dto.CarMapper;
+import com.example.carrepair.model.client.Client;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,13 @@ public class CarService {
                 .collect(Collectors.toList());
     }
 
+    public List<String> findALlRegistrationNumbers() {
+        return carRepository.findAll()
+                .stream()
+                .map(Car::getRegistrationNumber)
+                .collect(Collectors.toList());
+    }
+
     public Optional<CarDto> findById(Long id) {
         return carRepository.findById(id)
                 .map(carMapper::toDto);
@@ -39,6 +47,11 @@ public class CarService {
             throw new DuplicateRegistrationNumber();
         });
         return mapAndSave(car);
+    }
+
+    public String getTheMostFrequentlyBrand(){
+        String[] brands = carRepository.findTheMostFrequentlyBrand();
+        return brands[0];
     }
 
     public CarDto update(CarDto car) {

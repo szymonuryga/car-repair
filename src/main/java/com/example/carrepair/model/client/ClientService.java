@@ -23,6 +23,13 @@ public class ClientService {
                 .collect(Collectors.toList());
     }
 
+    public List<String> findALlNationalId() {
+        return clientRepository.findAll()
+                .stream()
+                .map(Client::getNationalId)
+                .collect(Collectors.toList());
+    }
+
 
     public Optional<ClientDto> findById(Long id) {
         return clientRepository.findById(id).map(clientMapper::toDto);

@@ -24,6 +24,11 @@ public class MechanicController {
         return mechanicService.findAll();
     }
 
+    @GetMapping("/emails")
+    public List<String> findALlEmails(){
+        return mechanicService.findALlEmails();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MechanicDto> findById(@PathVariable Long id){
         return mechanicService.findById(id)

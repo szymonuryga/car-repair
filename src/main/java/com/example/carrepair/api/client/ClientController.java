@@ -21,6 +21,11 @@ public class ClientController {
         return clientService.findAll();
     }
 
+    @GetMapping("/nationals")
+    public List<String> findALlNationalId(){
+        return clientService.findALlNationalId();
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ClientDto> findById(@PathVariable Long id) {
         return clientService.findById(id)
